@@ -60,5 +60,6 @@ For more detailed information on installing Ubuntu 22.04, refer to the official 
 
 If you encounter any issues during the installation process or have specific questions about Ubuntu 22.04, feel free to ask for assistance.
 ## **Trial commands:**
-![image](https://github.com/asserelzeki6/M.I.A_Training/assets/121148855/5b190d40-54c7-46ae-a97a-610d699e1fc4)
+![image](https://github.com/asserelzeki6/M.I.A_Training/assets/121148855/7a7576a2-d24a-4e73-bae3-3871c8e5cb73)
+
 

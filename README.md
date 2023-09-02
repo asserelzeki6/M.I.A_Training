@@ -23,4 +23,9 @@ This repository contains tasks and files for the technical team called MIA. Each
 - **Description:** Task 4 is about python oop and Linear regression.
 - **Task File:** [Task 4 File](https://drive.google.com/file/d/1o91rkmc5MGzVRlB11eRqwnvVZSpX6pcb/view?fbclid=IwAR2N7z0M9i5_uFH9jrSuMfcTggmWh2wyqEfuXHFNR1imsK8LnMzpaD29omI)
 
+## Task 5
+
+- **Description:** Task 5 is about Version control and Linux.
+- **Task File:** [Task 5 File](https://drive.google.com/.../1XN0uImAtZZ76HKAGcLN.../view)
+  
 Switch to the appropriate branch to access the files and information related to each task.

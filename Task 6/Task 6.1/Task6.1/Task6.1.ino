@@ -1,6 +1,12 @@
 #include <Wire.h>
+#include <ros.h>
+#include <std_msgs/Float32.h>
 #define MPU6050_ADDR  0x68 // MPU6050 I2C address
 #define Gyro_Zout_ADDR  0x47
+
+ros::NodeHandle nh;
+std_msgs::Float32 float_msg;
+ros::Subscriber<std_msgs::Float32> filtered_sub("filtered_chatter", &filteredCallback);
 
 int16_t gyro_Offset_Z = 0;        // Offset for gyro Z-axis
 int16_t raw_Gyro_Z = 0;
@@ -10,14 +16,14 @@ unsigned long previousMillis = 0;
 float real_gyro_Z= 0.0;
 float prev_Gyro_Z= 0.0;
 float dt = 0.01;           // Sample interval in seconds (adjust as needed)
+Float32 filtered_data=0.0;
 
+void filteredCallback(const std_msgs::Float32& msg) {
+  filtered_data = msg.data;  // Store the received float data in the filtered_data variable
+}
 void setup() {
-  /*
-  // Initialize ROS
-    nh.initNode();
-    nh.advertise(pub);
-    nh.subscribe(sub);
-  */
+  nh.initNode();
+  nh.subscribe(filtered_sub);
   Wire.begin();
   Serial.begin(9600);
   MPU6050_Init();
@@ -25,6 +31,7 @@ void setup() {
 }
 
 void loop() {
+  nh.spinOnce();
   // Get the current time using millis
   unsigned long currentMillis = millis();
 
@@ -64,6 +71,9 @@ void loop() {
 
   Serial.print("Yaw Angle: ");
   Serial.println(yawAngle);
+  
+  Serial.print("Filtered Data for further calculations: ");
+  Serial.println(filtered_data);
 
   delay(10); // Adjust the loop rate as needed
 }

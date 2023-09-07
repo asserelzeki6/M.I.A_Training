@@ -8,6 +8,9 @@ ros::NodeHandle nh;
 std_msgs::Float32 float_msg;
 ros::Subscriber<std_msgs::Float32> filtered_sub("filtered_chatter", &filteredCallback);
 
+std_msgs::Float32 raw_data_msg;
+ros::Publisher raw_data_pub("raw_data", &raw_data_msg);
+
 int16_t gyro_Offset_Z = 0;        // Offset for gyro Z-axis
 int16_t raw_Gyro_Z = 0;
 float gyroScale = 32786/2000;        // Sensitivity scale for gyroscope (default full-scale range)
@@ -31,7 +34,6 @@ void setup() {
 }
 
 void loop() {
-  nh.spinOnce();
   // Get the current time using millis
   unsigned long currentMillis = millis();
 
@@ -46,15 +48,17 @@ void loop() {
 
   Read_MPU6050();
 
+  
+  // get rid of the offset
+  raw_Gyro_Z-= gyro_Offset_Z;
+  
   ///filter the read data by a low-pass filter script written in python 
   /*
   // Read gyro data and send it as a ROS message
-  // Receive filtered data from Python via ROS
-  // ...
-    nh.spinOnce();
-  */
+  raw_data_msg.data = raw_Gyro_Z;
+  raw_data_pub.publish(&raw_data_msg);
+  nh.spinOnce();
   // Calculate change in yaw angle using the gyro data
-  raw_Gyro_Z-= gyro_Offset_Z;
   real_gyro_Z = (float)raw_Gyro_Z / gyroScale;
   real_gyro_Z-= prev_Gyro_Z;
   prev_Gyro_Z = real_gyro_Z;

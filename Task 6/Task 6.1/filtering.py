@@ -1,12 +1,28 @@
-# Python ROS node for receiving and filtering gyro data
-# Import necessary ROS libraries and messages
-import rospy
-from std_msgs.msg import Int32
 import numpy as np
 from scipy.signal import butter, lfilter
+import rospy
+from std_msgs.msg import float32
 
-def raw_gyro_callback(msg):
-    # Receive raw gyro data from Arduino
+def callback(data):
+    filtered_data=filter(data.data)
+    rospy.loginfo("Received: %s", data.data)
+    rospy.loginfo("Filtered: %s", filtered_data)
+
+    # Publish the filtered data
+    filtered_pub.publish(filtered_data)
+
+def listener():
+    rospy.init_node('arduino_listener', anonymous=True)
+    rospy.Subscriber("chatter", float32, callback)
+
+if __name__ == '__main__':
+    try:
+        listener()
+        # Create a publisher for the filtered data
+        filtered_pub = rospy.Publisher("filtered_chatter", float32, queue_size=10)
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
 
 
 # Define filter parameters
@@ -28,40 +44,19 @@ def butter_lowpass_filter(data, cutoff, fs, order=5):
     return y
 
 # Read noisy sensor data from an external source (replace this with your data source)
-def read_noisy_data():
-    # Replace this with code to read data from your source
-    # Example: data = your_data_source()
-    data = np.random.randn(100)  # Simulated noisy data for testing
-    return data
-
-# Main loop
-while True:
-    # Read noisy data
-    noisy_data = read_noisy_data()
+def filter (data):
 
     # Apply the low-pass filter
-    filtered_data = butter_lowpass_filter(noisy_data, cutoff_frequency, sampling_rate, filter_order)
+    filtered_data = butter_lowpass_filter(data, cutoff_frequency, sampling_rate, filter_order)
 
     # Process the filtered data
     # Replace this with your specific processing logic
     # Example: process_data(filtered_data)
 
-    print("Noisy Data:", noisy_data)
+    print("Noisy Data:", data)
     print("Filtered Data:", filtered_data)
-
-
-    # Publish filtered data
-    # ...
-
-if __name__ == '__main__':
-    rospy.init_node('gyro_filter_node')
-    sub = rospy.Subscriber('raw_gyro_data', Int32, raw_gyro_callback)
-    pub = rospy.Publisher('filtered_gyro_data', Int32, queue_size=10)
-    rospy.spin()
-
-
-# Initialize variables for filtering
-
+    return filtered_data
+    
 # Note that : The default DLPF_CFG value for the MPU6050 is typically 0 (0x00).
 #  This corresponds to a gyroscope bandwidth of 256 Hz and an accelerometer bandwidth of 260 Hz, 
 #  as per the datasheet.

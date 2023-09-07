@@ -27,5 +27,10 @@ This repository contains tasks and files for the technical team called MIA. Each
 
 - **Description:** Task 5 is about Version control and Linux.
 - **Task File:** [Task 5 File](https://drive.google.com/file/d/1XN0uImAtZZ76HKAGcLNnQldbq0W9ZInA/view?usp=sharing&fbclid=IwAR081apL7r-JCUUUfMbhP_x17iycRZmiiHd2BjooZXWX85kBVusbd_Lwjgw)
+
+## Task 6
+
+- **Description:** Task 6 is about Sensors and filters and path finding.
+- **Task File:** [Task 6 File](https://drive.google.com/file/d/1fuQ6J7XP0mofkjVLAavJ0qn_lh_srZ_X/view?fbclid=IwAR1xgMqQvwG_Npij4N5fmVmqbiSUl8qzsZxgesSiRk7bl3xafYrwWTBgYts)
   
 Switch to the appropriate branch to access the files and information related to each task.

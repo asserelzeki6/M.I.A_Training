@@ -16,7 +16,7 @@ unsigned long previousMillis = 0;
 float real_gyro_Z= 0.0;
 float prev_Gyro_Z= 0.0;
 float dt = 0.01;           // Sample interval in seconds (adjust as needed)
-Float32 filtered_data=0.0;
+float filtered_data=0.0;
 
 void filteredCallback(const std_msgs::Float32& msg) {
   filtered_data = msg.data;  // Store the received float data in the filtered_data variable
